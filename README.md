@@ -61,12 +61,12 @@ O arquivo `script.js` está vinculado no final da página. Ele será responsáve
 
 ### Características:
 
-- Validação de nome : garante que o usuário inseriu um nome antes de prosseguir.
-- Validação de senha : verifica se uma senha foi inserida.
-- Validação de e-mail : valida o formato do e-mail usando verificações básicas.
-- Validação de CPF : Utiliza um algoritmo matemático para verificar a validade de um número de CPF brasileiro.
-- Pesquisa CEP : integra-se com a API ViaCep para preencher automaticamente campos de endereço com base na entrada do código postal.
-- Feedback do usuário : exibe mensagens para orientar os usuários na correção de quaisquer erros em suas entradas.
+- **Validação de nome :** garante que o usuário inseriu um nome antes de prosseguir.
+- **Validação de senha :** verifica se uma senha foi inserida.
+- **Validação de e-mail :** valida o formato do e-mail usando verificações básicas.
+- **Validação de CPF :** Utiliza um algoritmo matemático para verificar a validade de um número de CPF brasileiro.
+- **Pesquisa CEP :** integra-se com a API ViaCep para preencher automaticamente campos de endereço com base na entrada do código postal.
+- **Feedback do usuário :** exibe mensagens para orientar os usuários na correção de quaisquer erros em suas entradas.
 
 ### Funções de Validação:
 Cada campo de entrada tem uma função de validação associada que dispara quando o foco sai. Se a validação falhar, a mensagem correspondente será exibida em vermelho, e a borda do campo ficará vermelha. Se a validação for bem-sucedida, a borda ficará verde.
