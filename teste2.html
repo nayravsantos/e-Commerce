@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Endereço</title>
+    <link rel="stylesheet" href="teste2.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Cadastro de Endereço</h1>
+        <form id="address-form">
+            <div class="input-box">
+                <label for="cep">CEP:</label>
+                <input type="text" placeholder="Digite seu CEP" name="cep" id="cep" maxlength="8">
+                <div id="mensagemCep" class="msg"></div>
+            </div>
+
+            <div class="input-box">
+                <label for="localidade">Cidade:</label>
+                <input type="text" placeholder="Cidade" name="localidade" id="localidade">
+            </div>
+
+            <div class="input-box">
+                <label for="bairro">Bairro:</label>
+                <input type="text" placeholder="Bairro" name="bairro" id="bairro">
+            </div>
+
+            <div class="input-box">
+                <label for="uf">Estado:</label>
+                <input type="text" placeholder="Estado" name="uf" id="uf">
+            </div>
+
+            <div class="input-box">
+                <label for="logradouro">Rua:</label>
+                <input type="text" placeholder="Rua" name="logradouro" id="logradouro">
+            </div>
+
+            <div class="input-box">
+                <label for="numero">Número:</label>
+                <input type="text" placeholder="Número" id="numero" maxlength="5"
+                    oninput="this.value = this.value.replace(/[^0-9]/g, '');">
+            </div>
+
+            <div class="input-box">
+                <label for="complemento">Complemento:</label>
+                <input type="text" placeholder="Complemento" name="complemento" id="complemento">
+            </div>
+
+            <button type="submit">Salvar Endereço</button>
+        </form>
+    </div>
+    <script src="teste2.js"></script>
+</body>
+</html>
