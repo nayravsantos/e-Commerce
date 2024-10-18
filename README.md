@@ -51,7 +51,7 @@ Contém os seguintes campos:
 ### Botão `"Próximo"`
  
 O botão de submissão "Próximo" (`<input type="submit" id="proximo" value="Próximo">`) envia os dados inseridos nos dois formulários. A funcionalidade de envio e validação será implementada via JavaScript no arquivo `script.js`.
- 
+#
 ## JavaScript
  
 O arquivo `script.js` está vinculado no final da página. Ele será responsável por:
