@@ -130,154 +130,115 @@ function validarCPF(cpf) {
 }
  
  
-// VALIDAÇÃO DE CEP
- 
 'use strict'; // Modo restrito
- 
-// Este metódo faz com que o JavaScript opere de forma mais segura e rigorosa,
-// Consumo de API - https://viacep.com.br/
- 
-// Função para limpar formulário
+
+// Função para limpar o formulário
 const limparFormulario = () => {
-    document.getElementById("logradouro").value = ""; //Rua
-    document.getElementById("localidade").value = ""; //C
-    document.getElementById("uf").value = ""; //E
-    document.getElementById("bairro").value = ""; // P  
- 
+    document.getElementById("logradouro").value = ""; // Rua
+    document.getElementById("localidade").value = ""; // Cidade
+    document.getElementById("uf").value = ""; // Estado
+    document.getElementById("bairro").value = ""; // Bairro
 }
-// cria regra de expressão regular (Regex) para testar o valor informado pelo usuário
+
+// Verifica se a string é um número
 const eNumero = (numero) => /^[0-9]+$/.test(numero);
- 
-const cepValido = (cep) => cep.length == 8 && eNumero(cep);
-// length é uma propriedade que verifica a quantidade de caracteres do argumento cep
- 
-// Função de preenchimento de formulário com os dados de cep, buscado da API
+
+// Valida se o CEP tem 8 dígitos e é numérico
+const cepValido = (cep) => cep.length === 8 && eNumero(cep);
+
+// Preenche o formulário com os dados do CEP buscados na API
 const preencherFormulario = (endereco) => {
     document.getElementById('logradouro').value = endereco.logradouro;
     document.getElementById('localidade').value = endereco.localidade;
     document.getElementById('uf').value = endereco.uf;
     document.getElementById('bairro').value = endereco.bairro;
+
+    // Altera a cor das bordas dos campos
+    ['cep', 'logradouro', 'localidade', 'uf', 'bairro'].forEach(id => {
+        document.getElementById(id).style.borderColor = "green";
+    });
 }
- 
-// Função de consumo de API  ViaCep
-// função assincrona
+
+// Função assíncrona para consumir a API ViaCep
 const pesquisarCep = async () => {
+    const cep = document.getElementById("cep");
     limparFormulario();
-    // Url do tipo JSON
+
     const url = `https://viacep.com.br/ws/${cep.value}/json/`;
- 
-    // Estrutura de condição
-    // Verifica se os argumentos são verdadeiros
+
     if (cepValido(cep.value)) {
-        // Retorna os todos dados do cep digitado pelo usuário
-        // await busca e retorna sem erros os dados
-        // fetch pesquisa no navegar
-        const dados = await fetch(url);
-        const addres = await dados.json();
- 
-        if (addres.hasOwnProperty('erro')) {
-            // O método hasOwnProperty()
-            // retorna um booleano indicando se o objeto possui a propriedade especificada como uma
-            // propriedade definida no próprio objeto em questão (ao contrário de uma propriedade herdada).
-            // alert("CEP não encontrado");
- 
- 
-        } else {
-            preencherFormulario(addres);
-            document.getElementById("cep").style.borderColor = "green";
-            document.getElementById('logradouro').style.borderColor = "green";
-            document.getElementById('localidade').style.borderColor = "green";
-            document.getElementById('uf').style.borderColor = "green";
-            document.getElementById('bairro').style.borderColor = "green";
-         
+        try {
+            const dados = await fetch(url);
+            const endereco = await dados.json();
+
+            if (endereco.hasOwnProperty('erro')) {
+                // CEP não encontrado
+                alert("CEP não encontrado.");
+            } else {
+                preencherFormulario(endereco);
+            }
+        } catch (error) {
+            console.error("Erro ao buscar CEP:", error);
         }
- 
     } else {
         document.getElementById("mensagemCep").innerHTML = "Por favor, preencha seu CEP corretamente!";
-        document.getElementById("cep").style.borderColor = "";
-        document.getElementById("cep").style.borderColor = "";
-        document.getElementById('logradouro').style.borderColor = "";
-        document.getElementById('localidade').style.borderColor = "";
-        document.getElementById('uf').style.borderColor = "";
-        document.getElementById('bairro').style.borderColor = "";
-    }
- 
-}
-// Adicionar escutador para executar consumo de API da ViaCEP
-document.getElementById("cep").addEventListener("focusout", pesquisarCep); //adicionando escutador de evento
- 
- 
- 
- 
-function numDigitado() {
-    let num = document.getElementById("numero").value;
-    if (num) {
-        document.getElementById("numero").style.borderColor = "green";
- 
-    } else {
-        document.getElementById("complemento").style.borderColor = "";
+        ['cep', 'logradouro', 'localidade', 'uf', 'bairro'].forEach(id => {
+            document.getElementById(id).style.borderColor = "";
+        });
     }
 }
-document.getElementById("numero").addEventListener("focusout", numDigitado)
- 
- 
-function complementoDigitado() {
-    let complemento = document.getElementById("complemento").value;
-    if (complemento) {
-        document.getElementById("complemento").style.borderColor = "green";
-    } else {
-        document.getElementById("complemento").style.borderColor = "";
-    }
-}
+
+// Escutador para executar a função ao sair do campo CEP
+document.getElementById("cep").addEventListener("focusout", pesquisarCep);
+
+// Validação do campo Número
+const numDigitado = () => {
+    const num = document.getElementById("numero").value;
+    document.getElementById("numero").style.borderColor = num ? "green" : "";
+};
+document.getElementById("numero").addEventListener("focusout", numDigitado);
+
+// Validação do campo Complemento
+const complementoDigitado = () => {
+    const complemento = document.getElementById("complemento").value;
+    document.getElementById("complemento").style.borderColor = complemento ? "green" : "";
+};
 document.getElementById("complemento").addEventListener("focusout", complementoDigitado);
- 
+
+// Ação ao clicar no botão Próximo
 document.getElementById("proximo").addEventListener("click", () => {
-    // Funcão que chamara as personalização de css
-    // também sera usada somente quando os campos estiverem preeenchidos
-    var x = document.getElementById("form1");
-    var y = document.getElementById("form2");
- 
-    if (document.getElementById("nome").value == "" ||
-        document.getElementById("senha").value == "" ||
-        document.getElementById("email").value == "" ||
-        document.getElementById("cpf").value == ""
-    ) {
-        document.getElementById("mensagemNome").innerHTML = "Preencha os campos para avançar."
-        document.getElementById("mensagemEmail").innerHTML = "Preencha os campos para avançar."
-        document.getElementById("mensagemSenha").innerHTML = "Preencha os campos para avançar."
-        document.getElementById("mensagemCpf").innerHTML = "Preencha os campos para avançar."
- 
+    const camposObrigatorios = [
+        "nome", "senha", "email", "cpf"
+    ];
+    const camposVazios = camposObrigatorios.some(id => document.getElementById(id).value === "");
+
+    if (camposVazios) {
+        document.getElementById("mensagemNome").innerHTML = "Preencha os campos para avançar.";
+        document.getElementById("mensagemEmail").innerHTML = "Preencha os campos para avançar.";
+        document.getElementById("mensagemSenha").innerHTML = "Preencha os campos para avançar.";
+        document.getElementById("mensagemCpf").innerHTML = "Preencha os campos para avançar.";
     } else {
         document.getElementById("form1").classList.add("toggle1");
         document.getElementById("form2").classList.add("toggle2");
         document.getElementById("proximo").style.display = "none";
- 
-        document.getElementById("mensagemNome").innerHTML = "";
-        document.getElementById("mensagemEmail").innerHTML = "";
-        document.getElementById("mensagemSenha").innerHTML = "";
-        document.getElementById("mensagemCpf").innerHTML = "";
- 
-        document.getElementById("nome").value = "";
-        document.getElementById("senha").value = "";
-        document.getElementById("email").value = "";
-        document.getElementById("cpf").value = "";
+
+        camposObrigatorios.forEach(id => {
+            document.getElementById(id).value = "";
+            document.getElementById(`mensagem${id.charAt(0).toUpperCase() + id.slice(1)}`).innerHTML = "";
+        });
     }
- 
-   
-})
- 
-// Escutador de todos os campos CEP se estão preenchidos e fazer uma transição de saída para o formulário
-function endCad() {
-    if (document.getElementById('logradouro').value =="" ||
-    document.getElementById('localidade').value == ""||
-    document.getElementById('uf').value == "" ||
-    document.getElementById('bairro').value =="" ||
-    document.getElementById("cep").value =="" ){
-        document
-       
- 
-    }else{
- 
+});
+
+// Verifica se todos os campos de endereço estão preenchidos
+const endCad = () => {
+    const camposEndereco = ['logradouro', 'localidade', 'uf', 'bairro', 'cep'];
+    const camposVazios = camposEndereco.some(id => document.getElementById(id).value === "");
+
+    if (camposVazios) {
+        // Mensagem ou ação caso campos estejam vazios
+    } else {
+        // Ação caso todos os campos estejam preenchidos
     }
-}
+};
+
 endCad();
