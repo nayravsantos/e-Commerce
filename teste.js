@@ -40,4 +40,3 @@ function displayError(message) {
         errorMessage.textContent = '';
     }, 3000);
 }
-.
